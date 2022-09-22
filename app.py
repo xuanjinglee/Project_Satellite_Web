@@ -1,6 +1,6 @@
-from distutils.command.upload import upload
 import streamlit as st
 import cv2
+import numpy as np
 import requests
 
 '''
@@ -8,42 +8,43 @@ import requests
 '''
 
 st.markdown('''
-Remember that there are several ways to output content into your web page...
+Given a satellite/aerial imagery,
 
-Either as with the title by just creating a string (or an f-string). Or as with this paragraph using the `st.` functions
+Generate an image that show given image segmented into numerous key elements.
+
+(i.e. Building, Land, Road, Vegetation, Water and Others)
 ''')
 
 uploaded_image = st.file_uploader(label="Choose an image to upload",
                                   type=['png', 'jpg'])
 
+# def display_image(image):
+
 if uploaded_image is not None:
     st.image(uploaded_image)
 
-# Function to preprocess image
-def preprocess(image):
-    pass
+    # Call API to do prediction
 
-# Call API to do prediction
+    api_url = "https://segapi-tnfnn6u4nq-ew.a.run.app/upload_image"
 
-api_url = "https://segapi-tnfnn6u4nq-ew.a.run.app/get_image"
+    headers = {
+        'accept': 'application/json',
+        # requests won't add a boundary if this header is set when you pass files=
+        # 'Content-Type': 'multipart/form-data',
+    }
+    files = {
+        'file': uploaded_image,
+    }
+    # response = requests.post('http://127.0.0.1:8000/upload', headers=headers, files=files)
+    response = requests.post('https://segapi-tnfnn6u4nq-ew.a.run.app/upload_image', headers=headers, files=files)
 
-params = dict(
-    filename=uploaded_image
-)
+    st.write(response.text)
 
-response = requests.get(api_url, params=params)
+    params = {
+        'filename': f'transformed_{uploaded_image.name}',
+    }
+    response = requests.get('https://segapi-tnfnn6u4nq-ew.a.run.app/get_image', params=params, headers=headers)
+    # from IPython.display import Image, display
+    # display(Image(response.content))
 
-prediction = response.json()
-file_name = st.text_input('Save file as:', 'E.g. img102_label.png ')
-# Button to download predicted label
-
-if uploaded_image is not None and prediction is not None:
-    file_name = st.text_input('Save file as:', 'E.g. img102_label.png ')
-
-    with open(uploaded_image, "rb") as file:
-        btn = st.download_button(
-                label="Download image",
-                data=file,
-                file_name="flower.png",
-                mime="image/png"
-            )
+    st.image(response.content)
