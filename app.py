@@ -72,10 +72,7 @@ if uploaded_image is not None:
     #     st.success(f'Successfully uploaded {uploaded_image.name}')
     pred_multi_class = get_image(f"t1_{uploaded_image.name}")
     pred_building_1 = get_image(f"t2_{uploaded_image.name}")
-    if uploaded_image.name == "hurricane-harvey_00000018_pre_disaster.png":
-        pred_building_2 = get_image("hurricane-harvey_00000017_pre_disaster.png")
-    else :
-        pred_building_2 = get_image(f"t3_{uploaded_image.name}")
+    pred_building_2 = get_image(f"t3_{uploaded_image.name}")
 
     selected = st.radio("Choose a Model to preview result:",
                         ["Multi-Class Segmentation",
