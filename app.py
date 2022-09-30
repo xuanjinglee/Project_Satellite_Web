@@ -87,7 +87,7 @@ if uploaded_image is not None:
         st.caption("<h2 style='text-align: center; color: black;'>Multi-Class Segmentation</h2>", unsafe_allow_html=True)
         st.caption("<h3 style='text-align: center; color: black;'>Building, Land, Road, Vegetation, Water and Others</h3>", unsafe_allow_html=True)
 
-        if uploaded_image.name == "hurricane-harvey_00000018_pre_disaster.png":
+        if uploaded_image.name == "hurricane-harvey_00000017_pre_disaster.png":
             st.write("")
             st.caption("<h3 style='text-align: center; color: black;'>Blue = Buildings</h3>", unsafe_allow_html=True)
             st.caption("<h3 style='text-align: center; color: black;'>Lawn Green = Vegetation</h3>", unsafe_allow_html=True)
