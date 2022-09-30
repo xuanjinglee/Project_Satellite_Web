@@ -72,6 +72,8 @@ if uploaded_image is not None:
     #     st.success(f'Successfully uploaded {uploaded_image.name}')
     pred_multi_class = get_image(f"t1_{uploaded_image.name}")
     pred_building_1 = get_image(f"t2_{uploaded_image.name}")
+    if uploaded_image.name == "hurricane-harvey_00000018_pre_disaster.png":
+        pred_building_2 = get_image("hurricane-harvey_00000017_pre_disaster.png")
     pred_building_2 = get_image(f"t3_{uploaded_image.name}")
 
     selected = st.radio("Choose a Model to preview result:",
@@ -87,7 +89,7 @@ if uploaded_image is not None:
         st.caption("<h2 style='text-align: center; color: black;'>Multi-Class Segmentation</h2>", unsafe_allow_html=True)
         st.caption("<h3 style='text-align: center; color: black;'>Building, Land, Road, Vegetation, Water and Others</h3>", unsafe_allow_html=True)
 
-        if uploaded_image.name == "hurricane-harvey_00000017_pre_disaster.png":
+        if uploaded_image.name == "hurricane-harvey_00000018_pre_disaster.png":
             st.write("")
             st.caption("<h3 style='text-align: center; color: black;'>Blue = Buildings</h3>", unsafe_allow_html=True)
             st.caption("<h3 style='text-align: center; color: black;'>Lawn Green = Vegetation</h3>", unsafe_allow_html=True)
